@@ -38,13 +38,13 @@ Raspberry piの電源を入れる前に接続しておく
 
 screenをつかって接続
 
-	$ screen /dev/cu.usbserial-AI02CNTL 115200
+	$ screen /dev/cu.usbserial-ABCDEFG 115200
 
 	CTRL+A k y で終了
 
 cu をつかって接続
 
-	$ sudo cu -l /dev/cu.usbserial-AI02CNTL -s 115200
+	$ sudo cu -l /dev/cu.usbserial-ABCDEFG -s 115200
 
 ログインする
 
