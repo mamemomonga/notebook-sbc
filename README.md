@@ -1,8 +1,7 @@
 # Raspberry Piのメモ帳
 
 * [J8 ピンヘッダレイアウト](./j8-pinheader)
-* [macOS Sierra で OS の入ったSDカードを準備する](./writeimage-sierra.md)
-* [USB-シリアルアダプタでコンソールに接続する](./usb-serial-console/)
+* [Raspbian基本セットアップ](./raspbian-setup.md)
 
 関連情報
 
