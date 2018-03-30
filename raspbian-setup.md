@@ -1,5 +1,7 @@
 # Raspbian基本セットアップ
 
+シリアル接続だとモニタとキーボードが不要なので、ターミナル接続さえできればよいときはこちらのほうが便利です。
+
 * Raspberry Pi W
 * 2017-11-29-raspbian-stretch-lite
 * SD書込にはmacOSを使用する
@@ -70,6 +72,8 @@ USB-UARTブリッジICには
 * [Profilic PL2303系](http://www.prolific.com.tw/US/ShowProduct.aspx?pcid=41&showlevel=0017-0037-0041)
 
 などがあるので、ICに合わせたドライバをインストールしておきます。
+
+[こういうのを使う場合は、+5V(赤)は接続しないこと](https://www.amazon.co.jp/dp/B00K7YYFNM/)
 
 * 回路電圧は **3.3V** を使用してください。
 * 買うならFT232系, CP210xを使用したものがおすすめ。FT232はニセモノチップも出回っているので注意。
