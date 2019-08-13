@@ -107,8 +107,6 @@ interfaces.d/wlan0
 
 # アップデートと再起動
 
-	$ sudo sh -c 'apt-get update && apt-get -y upgrade && reboot'
-
 再接続を行う
 
 この時点で avahi-daemon が入っているので、ローカルネットワークからだと raspiw.local で名前解決できる。
