@@ -2,8 +2,8 @@
 
 * [Raspbian](./raspbian)
 * [Ubuntu](./ubuntu)
-* [J8 ピンヘッダレイアウト](./j8-pinheader)
-* [シリアルコンソール](./serial)
+* [ピンヘッダ](./pinheader)
+* [config.txt](./configTXT.md)
 
 関連情報
 
