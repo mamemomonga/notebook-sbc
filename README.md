@@ -1,13 +1,7 @@
-# Raspberry Piの手帳
+# シングルボードコンピュータの手帳
 
-* [Raspbian](./raspbian)
-* [Ubuntu](./ubuntu)
-* [ピンヘッダ](./pinheader)
-* [config.txt](./ConfigTXT.md)
-
-関連情報
-
-* [Wikipedia(ja)](https://ja.wikipedia.org/wiki/Raspberry_Pi)
-* [Downloads](https://www.raspberrypi.org/downloads/)
-* [RPi Hub](https://elinux.org/RPi_Hub)
-
+* [Raspberry Pi](./raspberry-pi)
+* [Rock64](./rock64)
+* [NanoPi Neo2](./nanopi-neo2)
+* [jetson nano](./jetson-nano)
+*

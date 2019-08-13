@@ -1,0 +1,2 @@
+# nanoPI Neo2
+
