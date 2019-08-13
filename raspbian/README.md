@@ -4,8 +4,9 @@
 
 * [downloads](https://www.raspberrypi.org/downloads/)から書き込みたいイメージを選び、ダウンロードしておく。
 * [ピンヘッダ](../pinheader)を参考にUSB-UARTモジュールと結線し、接続する。
-* Raspberry Pi3以降の場合、事前に /boot/config.txtを開き、**dtoverlay=pi3-miniuart-bt** を追記する。
 * 書込ツールは[Balena Etcher](https://www.balena.io/etcher/)が便利。
+* Raspberry Pi3以降の場合、事前に /boot/config.txtを開き、**dtoverlay=pi3-miniuart-bt** を追記する。
+* /boot に ssh ファイルを作っておくと、初回起動時に ssh が有効になる
 
 Raspberry Piの電源を入れる前に接続しておく
 115200/1-N-8 で接続
@@ -42,6 +43,10 @@ Raspberry Piの電源を入れる前に接続しておく
 	$ sudo invoke-rc.d ssh start
 
 ## ネットワークの設定
+
+## 有線接続
+
+DHCPで有効となる 
 
 ## WiFiの設定
 
@@ -110,27 +115,42 @@ interfaces.d/wlan0
 
 	$ ssh pi@raspiw.local
 
-# 各種設定
+## 各種設定
 
 メニューで各種設定を行いたい場合は raspi-config を実行する
 
 	$ sudo raspi-config
 
-JSTにする
+基本的なセットアップ(END_OF_SNIPPETまでコピペすると実行)
 
-	$ sudo bash -xeu << 'END_OF_SNIPPET'
+	sudo bash -xeu << 'END_OF_SNIPPET'
+	# アップデート
+	export DEBIAN_FRONTEND=noninteractive
+	apt-get update
+	apt-get upgrade -y
+	
+	# よく使うもの、必要なものを導入
+	apt-get install -y \
+	  curl \
+	  tzdata \
+	  locales \
+	  git-core \
+	  vim \
+	  ntp \
+	  postfix
+	
+	# 日本時間の設定
 	rm /etc/localtime
 	ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 	echo 'Asia/Tokyo' > /etc/timezone
 	date
-	END_OF_SNIPPET
-
-git, vim, ntpd, postfixのセットアップ
-
-	$ sudo bash -xeu << 'END_OF_SNIPPET'
-	export DEBIAN_FRONTEND=noninteractive
-	apt-get install -y git-core vim ntp postfix
-
+	
+	# ロケールの変更
+	perl -i -nlpE 's!^# (en_US.UTF-8 UTF-8)!$1!; s!^# (ja_JP.UTF-8 UTF-8)!$1!; ' /etc/locale.gen
+	locale-gen
+	update-locale LANG=en_US.UTF-8
+	
+	# vimを設定し、標準エディタとする
 	cat > /etc/vim/vimrc.local << 'EOS'
 	syntax on
 	set wildmenu
@@ -147,8 +167,9 @@ git, vim, ntpd, postfixのセットアップ
 	set fenc=utf-8
 	set enc=utf-8
 	EOS
-	sudo sh -c "echo '3' | update-alternatives --config editor"
-
+	sudo sh -c "update-alternatives --set editor /usr/bin/vim.basic"
+	
+	# ntpdを設定し、ntp.jst.mfeed.ad.jp を設定する
 	cat > /etc/ntp.conf << 'EOS'
 	driftfile /var/lib/ntp/drift
 	statistics loopstats peerstats clockstats
@@ -160,23 +181,24 @@ git, vim, ntpd, postfixのセットアップ
 	restrict -6 default kod nomodify notrap nopeer noquery
 	restrict 127.0.0.1 
 	restrict ::1
-
+	
 	server ntp1.jst.mfeed.ad.jp iburst
 	server ntp2.jst.mfeed.ad.jp iburst
 	server ntp3.jst.mfeed.ad.jp iburst
 	EOS
-
+	
 	service ntp restart
 	sleep 10
 	ntpq -p
-
+	
+	# postfixを設定する
 	sed -i.bak -e 's/^\(inet_protocols = all\)/#\1/' /etc/postfix/main.cf
 	echo 'inet_protocols = ipv4' >> /etc/postfix/main.cf
 	service postfix restart
-
 	END_OF_SNIPPET
 
 # 参考サイト
 
 * [RaspberryPi3でシリアル通信を行う](https://qiita.com/yamamotomanabu/items/33b6cf0d450051d33d41)
 * [THE RASPBERRY PI UARTS](https://www.raspberrypi.org/documentation/configuration/uart.md)
+
