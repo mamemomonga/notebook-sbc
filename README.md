@@ -3,7 +3,7 @@
 * [Raspbian](./raspbian)
 * [Ubuntu](./ubuntu)
 * [ピンヘッダ](./pinheader)
-* [config.txt](./configTXT.md)
+* [config.txt](./ConfigTXT.md)
 
 関連情報
 
