@@ -28,9 +28,17 @@ RUNと書かれたピンをGNDに落とすと、リセットされる。停止�
 
 # シリアルコンソール
 
-* USB-UART変換モジュールの RXDに Raspberry Piの TXD を USB-UART変換モジュールの TXDに Raspberry Piの RXD を接続
-* モジュールは 3.3Vである必要がある。
-* GNDの接続を忘れずに
+* USB-UART変換モジュールを使用する。FT-232RL, CP2102など。[秋月電子](http://akizukidenshi.com/catalog/c/cusb232/)で購入できる。
+* モジュールは 3.3Vである必要がある。5Vトレラント機能はないので5Vで接続しないこと。
+* USB-UART変換モジュールの RXDに Raspberry Piの TXD を USB-UART変換モジュールの TXDに Raspberry Piの RXD を接続。
+* GNDの接続を忘れずに。
+* 標準のボーレートは 19200baud。
+* Pi3以降のRaspbianでは /boot/config.txt に **dtoverlay=pi3-miniuart-bt** の追加が必要。
+
+GNU screenで接続する例
+
+    [macOS] screen /dev/cu.USBtoUART
+    [Linux] sudo screen /dev/ttyUSB0
 
 # 参考文献
 
