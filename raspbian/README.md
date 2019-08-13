@@ -1,88 +1,11 @@
 # Raspbian基本セットアップ
 
-シリアル接続だとモニタとキーボードが不要なので、ターミナル接続さえできればよいときはこちらのほうが便利です。
+* ヘッドレス（モニタなし）セットアップ、シリアルを使用する
 
-* Raspberry Pi W
-* 2017-11-29-raspbian-stretch-lite
-* SD書込にはmacOSを使用する
-* HDMI+マウス+キーボードを使わずシリアル接続を使用
-
-* [16GBくらいのMicroSDカード](http://akizukidenshi.com/catalog/g/gS-13002/)を用意します。
 * [downloads](https://www.raspberrypi.org/downloads/)から書き込みたいイメージを選び、ダウンロードしておく。
-* [pv](https://linux.die.net/man/1/pv) を使うと、書込進捗を監視できます。
-
-# イメージの書込
-
-homebrewをつかってpvのインストール
-
-	$ brew install pv
-
-ディスクユーティリティーを起動
-
-	$ open -a 'Disk Utility'
-
-「ディスクユーティリティー」で書き込みたいSDカードのフォーマット済みパーティッションの「装置」の項目を確認します。**disk3s1** となっていれば、disk3のパーティション1。以下、disk3のSDカードに書き込みます。**必ず自分の環境のディスク番号を確認すること。**
-
-展開します
-
-	$ unzip 2017-11-29-raspbian-stretch-lite.zip
-
-書き込む先をもう一度確認します
-
-	$ diskutil list
-	/dev/disk3 (external, physical):
-	   #:                       TYPE NAME                    SIZE       IDENTIFIER
-	   0:     FDisk_partition_scheme                        *15.7 GB    disk3
-	   1:                 DOS_FAT_32 SD                      15.7 GB    disk3s1
-
-disk3でよさそうだ
-
-disk3s1をアンマウントします
-
-	$ diskutil unmount disk3s1
-
-書き込む
-
-[/dev/rdisk* をこちらをつかったほうが高速で書き込める](https://superuser.com/questions/631592/why-is-dev-rdisk-about-20-times-faster-than-dev-disk-in-mac-os-x)。
-
-	$ sudo sh -c 'pv 2017-11-29-raspbian-stretch-lite.img | dd of=/dev/rdisk3 bs=32m'
-
-## シリアルコンソールの設定を行う
-
-書込が完了するとFAT32のbootパーティッションがmacOSにマウントされます。
-
-WiFi,BT内蔵のRaspberry Piで使うRaspbianは、
-デフォルトでシリアルコンソールが無効になっているらしいので、
-まずは bootパーティションにある config.txt を編集します。
-
-	$ echo 'dtoverlay=pi3-miniuart-bt' >> /Volumes/boot/config.txt
-
-disk3s1をアンマウントする
-
-	$ diskutil unmountDisk disk3
-
-# シリアルインターフェイスの準備
-
-シリアル通信には、USB-UARTブリッジチップののったアダプタを使用する。
-
-USB-UARTブリッジICには
-
-* [FTDI FT-232系](http://www.ftdichip.com/Products/ICs/FT232R.htm)
-* [Silicon Labs CP210系](https://jp.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
-* [Profilic PL2303系](http://www.prolific.com.tw/US/ShowProduct.aspx?pcid=41&showlevel=0017-0037-0041)
-
-などがあるので、ICに合わせたドライバをインストールしておきます。
-
-[こういうのが便利。ドライバはPL2393系、+5V(赤)は接続しない。](https://www.amazon.co.jp/dp/B00K7YYFNM/)
-
-* 回路電圧は **3.3V** のものを使用してください。
-* 買うならFT232系, CP210xを使用したものがおすすめ。FT232はニセモノチップも出回っているので注意。
-
-以下のように接続します
-
-![usb-serial-console.png](usb-serial-console.png)
-
-## シリアル接続
+* [ピンヘッダ](../pinheader)を参考にUSB-UARTモジュールと結線し、接続する。
+* Raspberry Pi3以降の場合、事前に /boot/config.txtを開き、**dtoverlay=pi3-miniuart-bt** を追記する。
+* 書込ツールは[Balena Etcher](https://www.balena.io/etcher/)が便利。
 
 Raspberry Piの電源を入れる前に接続しておく
 115200/1-N-8 で接続
@@ -257,4 +180,3 @@ git, vim, ntpd, postfixのセットアップ
 
 * [RaspberryPi3でシリアル通信を行う](https://qiita.com/yamamotomanabu/items/33b6cf0d450051d33d41)
 * [THE RASPBERRY PI UARTS](https://www.raspberrypi.org/documentation/configuration/uart.md)
-

@@ -32,13 +32,13 @@ RUNと書かれたピンをGNDに落とすと、リセットされる。停止�
 * モジュールは 3.3Vである必要がある。5Vトレラント機能はないので5Vで接続しないこと。
 * USB-UART変換モジュールの RXDに Raspberry Piの TXD を USB-UART変換モジュールの TXDに Raspberry Piの RXD を接続。
 * GNDの接続を忘れずに。
-* 標準のボーレートは 19200baud。
+* 標準のボーレートは 115200 baud。
 * Pi3以降のRaspbianでは /boot/config.txt に **dtoverlay=pi3-miniuart-bt** の追加が必要。
 
 GNU screenで接続する例
 
-    [macOS] screen /dev/cu.USBtoUART
-    [Linux] sudo screen /dev/ttyUSB0
+    [macOS] screen /dev/cu.USBtoUART 115200
+    [Linux] sudo screen /dev/ttyUSB0 115200
 
 # 参考文献
 
