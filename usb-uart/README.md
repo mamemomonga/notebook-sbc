@@ -6,6 +6,8 @@
 
 [UARTはUniversal Asynchronous Receiver/Transmitterの略](https://ja.wikipedia.org/wiki/UART)で、シリアル通信の一種で、その中でも基本的なものです。シングルボードコンピュータで言うシリアル接続は一般的にこれを指します。これを外だしできるように信号レベルなどを変換したものがRS-232Cになります。
 
+UART信号はLSB FirstでActive Lowです。
+
 UARTには最低3本の線を利用します。TX(送信), RX(受信), GND(グランド)です。変換基盤のTXとターゲットのRX、変換基板のRXとターゲットのTX、変換基板のGNDとターゲットのGND、と言う形で接続します。
 
 また、信号には主に3.3Vと5Vが存在します。Raspberry Piなど多くのSBCは3.3Vで、Arduino UNOなどは5Vです。1.8Vのものもあります。これはハードウェアによって違い、場合によっては破損しますので、きちんと互いのデバイスを確認しておく必要があります。
