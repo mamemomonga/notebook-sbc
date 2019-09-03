@@ -65,6 +65,7 @@ OSでの認識
 * さらに安価です。
 * 初心者向きではありません。
 * いろいろと不具合が起きやすい印象がありますが、上手くいけばそれなりに使えます。
+* Raspberry Pi向けの専用ケーブルが安価で売っています。
 
 モジュール・ケーブル例
 
@@ -77,7 +78,7 @@ OSでの認識
 
 ## その他
 
-ほかにも[MCP2221A(便利なGPIO付きIC)](https://www.microchip.com/wwwproducts/en/MCP2221A)や[CH340(中華Arduinoクローンに多い)](http://www.wch.cn/download/CH341SER_EXE.html)などがあります。
+ほかにも[MCP2221A(便利なGPIO付きIC)](https://www.microchip.com/wwwproducts/en/MCP2221A)や[CH340(中華Arduinoクローンに多い、激安)](http://www.wch.cn/download/CH341SER_EXE.html)などがあります。
 
 # 利用方法
 
