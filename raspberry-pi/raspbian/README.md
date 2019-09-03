@@ -1,6 +1,10 @@
 # Raspbian基本セットアップ
 
-* ヘッドレス（モニタなし）セットアップ、シリアルを使用する
+RaspbianはRaspberry Piシリーズに最適化されたLinuxで、arm7lカーネルのDebian Busterです。
+Raspberry Piの一般的な用途においては最適です。
+ここでは、USB-Serialアダプタを利用したモニタ・キーボードなしのヘッドレス利用での基本的なセットアップを説明します。
+
+# 事前準備
 
 * [downloads](https://www.raspberrypi.org/downloads/)から書き込みたいイメージを選び、ダウンロードしておく。
 * [ピンヘッダ](../pinheader)を参考にUSB-UARTモジュールと結線し、接続する。
