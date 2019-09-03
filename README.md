@@ -5,4 +5,4 @@
 * [NanoPi Neo2](./nanopi-neo2)
 * [jetson nano](./jetson-nano)
 
-* [USB-UART変換基板について](./usb-uart)
+* [シリアル接続について](./usb-uart)

@@ -36,7 +36,8 @@ USB-UARTアダプタのドライバは、それに使われているチップに
 OSでの認識
 
 * macOSの場合 **/dev/cu.usbserial-XXXXX** として認識されます
-* Linuxの場合 **/dev/ttyUSBX** として認識されます。
+* Linuxの場合 **/dev/ttyUSBX** として認識されます
+* Windowsだと **COMXX** です(未確認)
 
 ## Silicon Labs CP2102
 
@@ -56,7 +57,8 @@ OSでの認識
 ### OSでの認識
 
 * macOSの場合 **/dev/cu.SLAB_USBtoUART** として認識されます
-* Linuxの場合 **/dev/ttyUSBX** として認識されます。
+* Linuxの場合 **/dev/ttyUSBX** として認識されます
+* Windowsだと **COMXX** です(未確認)
 
 ## Profilic PL2303系
 
@@ -76,3 +78,31 @@ OSでの認識
 ## その他
 
 ほかにも[MCP2221A(便利なGPIO付きIC)](https://www.microchip.com/wwwproducts/en/MCP2221A)や[CH340(中華Arduinoクローンに多い)](http://www.wch.cn/download/CH341SER_EXE.html)などがあります。
+
+# 利用方法
+
+## 配線
+
+* 必ずロジックレベル(電圧)を確認します
+* TXとRX, RXとTX, GNDとGNDを接続します
+* ボーレートを確認します。Raspberry Piの場合は 115200 です
+* パリティなし、データビット 8、ストップビット 1（N/8/1）でたいてい繋がります
+
+## ターミナル
+
+LinuxおよびmacOS
+
+### screenをつかって接続
+
+	$ screen /dev/cu.usbserial-ABCDEFG 115200
+
+	CTRL+A k y で終了
+
+### cu をつかって接続
+
+	$ sudo cu -l /dev/cu.usbserial-ABCDEFG -s 115200
+
+Windows
+
+[TeraTerm](http://hp.vector.co.jp/authors/VA002416/) や [ttssh2](https://ja.osdn.net/projects/ttssh2/)を使用します。
+
