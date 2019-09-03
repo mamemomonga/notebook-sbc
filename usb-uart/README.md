@@ -106,3 +106,6 @@ Windows
 
 [TeraTerm](http://hp.vector.co.jp/authors/VA002416/) や [ttssh2](https://ja.osdn.net/projects/ttssh2/)を使用します。
 
+# Raspberry Pi Raspbianでのシリアル接続
+
+WiFi機能のあるRaspberry Piでシリアルコンソールを使うためには、/boot/config.txt に **dtoverlay=pi3-miniuart-bt** を追記する必要があります。
