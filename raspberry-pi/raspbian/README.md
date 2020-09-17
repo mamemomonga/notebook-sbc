@@ -1,4 +1,6 @@
-# Raspbian基本セットアップ
+# Raspbian基本セットアップ(2019/09)
+
+## この情報は古くなっています
 
 RaspbianはRaspberry Piシリーズに最適化されたLinuxで、arm7lカーネルのDebian Busterです。
 Raspberry Piの一般的な用途においては最適です。

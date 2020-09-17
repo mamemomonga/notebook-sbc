@@ -1,17 +1,28 @@
 # config.txt ファイル
 
-config.txtファイルに設定を行うことで、Linux側からはできないRaspberry Pi自体の各種設定を行う。
-Raspbian(arm7l)の場合 **/boot/config.txt**, Debian Buster(arm64),Ubuntu(arm64)の場合 **/boot/firmware/config.txt**
-
-# 設定例
+* Raspberry Pi 4 4GB
+* [Raspberry Pi OS (32-bit) Lite 2020-08-20](https://www.raspberrypi.org/downloads/raspberry-pi-os/)
+* [config.txt](https://www.raspberrypi.org/documentation/configuration/config-txt/)
 
 ## Raspberry Pi3以降をヘッドレスで使う場合よく使う設定
 
-    # Pi 3以降のRaspbianでUARTを有効にする
+    # BluetoothのあるモデルでUARTを有効にする
     dtoverlay=pi3-miniuart-bt
 
     # GPUメモリを16MBにする
     gpu_mem=16
+
+		# AARCH64で動かす
+		arm_64bit=1
+	
+なお、/boot に ssh という空ファイルを置いてブートすると、起動時にSSHが有効になる。
+
+# config.txt ファイル(古い情報なので一部使えない項目がある)
+
+config.txtファイルに設定を行うことで、Linux側からはできないRaspberry Pi自体の各種設定を行う。
+Raspbian(arm7l)の場合 **/boot/config.txt**, Debian Buster(arm64),Ubuntu(arm64)の場合 **/boot/firmware/config.txt**
+
+# 設定例
 
 ## arm64カーネル向け設定
 
