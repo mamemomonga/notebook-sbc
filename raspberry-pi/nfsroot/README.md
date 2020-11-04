@@ -1,0 +1,3 @@
+# PXEブート、NFSroot
+
+
