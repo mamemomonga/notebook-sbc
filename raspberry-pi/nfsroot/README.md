@@ -243,3 +243,93 @@ dnsmasqの設定
 
 これで基本設定は完了、あとはPi3B+ の電源を入れるとブートする。起動シーケンスがはじまるまで1分ほどかかる。シリアルコンソールなどをつけておいたほうがよい。
 
+# rootのみNFSを使用する
+
+NFSrootの場合Dockerなどが動作しない、速度が遅いなどがあるので、SWAP, /tmp, /var/lib/dockerなどをMicroSD上に作成する。また、PXEbootを利用せず、bootはMicroSDから行うようにする。
+
+## MicroSDカードのフォーマット
+
+MicroSDカードを用意して接続する。[modify-bootable-sdcard.sh](./files/modify-bootable-sdcard.sh)を実行すると、フォーマットやドライブ一覧を確認できる
+
+	root@piserver:~# /root/files/modify-bootable-sdcard.sh
+	-----------------------------
+	Usage:
+	  /root/files/modify-bootable-sdcard.sh [DRIVE] format
+	  /root/files/modify-bootable-sdcard.sh [DRIVE] mount
+	  /root/files/modify-bootable-sdcard.sh [DRIVE] umount
+	-----------------------------
+	Drive List:
+	VENDOR   MODEL                 NAME          SIZE TYPE MOUNTPOINT UUID
+	TOSHIBA  TOSHIBA_THNSNH256GCST sda         238.5G disk
+	                               └─sda1      238.5G part /dsk       12345678-1234-1234-1234-12345678abc0
+	Generic  MassStorageClass      sdb           7.3G disk
+	                               mmcblk0      59.5G disk
+	                               ├─mmcblk0p1   256M part /boot      ABDC-EFGH
+	                               └─mmcblk0p2  59.2G part /          12345678-1234-1234-1234-12345678abc1
+
+フォーマットの実行、ターゲットは /dev/sdb とわかるので、こちらを利用する。データはすべて削除される
+
+	root@piserver:~# /root/files/modify-bootable-sdcard.sh /dev/sdb format
+	Target Drive: /dev/sdb
+	VENDOR   MODEL            NAME    SIZE TYPE MOUNTPOINT UUID
+	Generic  MassStorageClass sdb     7.3G disk
+	Ready? (y/N): y
+
+	...
+
+	---------------------------
+	/etc/fstab example
+	---------------------------
+	/dev/sdb1 /boot vfat defaults               0 0
+	/dev/sdb2 swap  swap defaults               0 0
+	/dev/sdb3 /mmc  ext4 noatime,data=writeback 0 0
+
+マウントを行う
+
+	root@piserver:~# /root/files/modify-bootable-sdcard.sh /dev/sdb mount
+
+
+## /bootのコピーとセットアップ
+
+bootのコピー、今回は /dsk/rpi/nfs/p2/boot をコピーする
+
+	root@piserver:# cd /dsk/rpi
+	root@piserver:/dsk/rpi# /root/files/expand-image.sh rpi-buster-v1.0.1.img nfs/p2
+	root@piserver:~# tar cC nfs/p2/boot . | tar xvpC /mnt/boot
+
+カーネルパラメータの設定
+
+    root@piserver:# TARGET_HOST=p2 bash -xe << 'EOS'
+    echo 'console=serial0,115200 console=tty1 root=/dev/nfs nfsroot=192.168.80.1:/dsk/rpi/nfs/'$TARGET_HOST',rsize=1048576,wsize=1048576,tcp,vers=3 rw ip=dhcp elevator=deadline net.ifnames=0 biosdevname=0' > /mnt/boot/cmdline.txt
+    EOS
+
+ディレクトリの作成
+
+    root@piserver:# bash -xe << 'EOS'
+	mkdir -p /mnt/mmc/$TARGET_HOST/mmc/tmp
+	mkdir -p /mnt/mmc/$TARGET_HOST/mmc/var/tmp
+	mkdir -p /mnt/mmc/$TARGET_HOST/mmc/var/lib/docker
+	EOS
+
+アンマウント
+
+	root@piserver:~# /root/files/modify-bootable-sdcard.sh /dev/sdb umount
+
+ディレクトリの先とfstabの設定
+
+    root@piserver:# TARGET_HOST=p2 bash -xe << 'EOS'
+	mkdir -p /dsk/rpi/nfs/$TARGET_HOST/mmc
+	mkdir -p /dsk/rpi/nfs/$TARGET_HOST/var/lib/docker
+	cat > /dsk/rpi/nfs/$TARGET_HOST/etc/fstab << 'EOH'
+	proc                /proc           proc defaults 0 0
+	/dev/mmcblk0p1      /boot           vfat defaults 0 0
+	/dev/mmcblk0p2      swap            swap defaults 0 0
+	/dev/mmcblk0p3      /mmc            ext4 noatime,data=writeback 0 0
+	/mmc/tmp            /tmp            none bind     0 0
+	/mmc/var/tmp        /var/tmp        none bind     0 0
+	/mmc/var/lib/docker /var/lib/docker none bind     0 0
+	EOH
+	EOS
+
+MicroSDを取り外し、Raspberry Piに接続してBootする
+
