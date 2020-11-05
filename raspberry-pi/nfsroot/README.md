@@ -207,7 +207,7 @@ fstabを編集
 
 SSHキーの設定
 
-/home/admin/.ssh の id_25519.pub を登録する。相手の/home/adminのUIDは1000であるとする。
+/home/admin/.ssh の id_ed25519.pub を登録する。相手の/home/adminのUIDは1000であるとする。
 
 	root@piserver:# TARGET_HOST=p1 bash -xe << 'EOS'
     mkdir -m 0700 /dsk/rpi/nfs/$TARGET_HOST/home/admin/.ssh
