@@ -80,6 +80,11 @@ eth0: 内臓Ethernet / eth1: USB3.0 Ethernet
 * [/root/firewall.sh](./files/firewall.sh)
 * [/etc/systemd/system/firewall.service](./files/firewall.service)
 
+コピー
+
+    root@piserver:# cp /root/files/firewall.sh /root/
+    root@piserver:# cp /root/files/firewall.service /etc/systemd/system/
+
 systemdの適用
 
 	root@piserver:# systemctl enable firewall
