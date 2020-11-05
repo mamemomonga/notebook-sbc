@@ -18,4 +18,5 @@ download dnsmasq.conf
 download expand-image.sh 1
 download firewall.service
 download firewall.sh 1
+download modify-bootable-sdcard.sh 1
 
