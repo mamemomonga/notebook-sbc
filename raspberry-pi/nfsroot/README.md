@@ -184,9 +184,9 @@ fstabを編集
 
     root@piserver:# cp nfs/p1/boot/bootcode.bin tftp/
 
-/dsk/rpi/tftp/c31da6bf を作成
+/dsk/rpi/tftp/abcdef01 を作成
 
-	root@piserver:# cp -av nfs/p1/boot tftp/c31da6bf
+	root@piserver:# cp -av nfs/p1/boot tftp/abcdef01
 
 カーネルパラメータの設定
 
