@@ -1,5 +1,7 @@
 # Raspberry Piの手帳
 
+* [Raspberry Pi4](./Pi4.md)
+* [PXEboot, NFSroot](./nfsroot)
 * [Raspbian](./raspbian)
 * [Ubuntu](./ubuntu)
 * [ピンヘッダ](./pinheader)
