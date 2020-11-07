@@ -223,12 +223,12 @@ SSHキーの設定
 
 NFSの設定
 
-	root@piserver:# echo '/dsk/rpi/nfs/p1 192.168.80.*(rw,sync,no_root_squash,no_subtree_check)' >> /etc/exports
+	root@piserver:# echo '/dsk/rpi/nfs/p1 192.168.80.0/24(rw,sync,no_root_squash,no_subtree_check)' >> /etc/exports
 
 	root@piserver:# exportfs -a
 	root@piserver:# exportfs
     /dsk/rpi/nfs/p1
-                    192.168.80.*
+                    192.168.80.0/24
 
 dnsmasqの設定
 
