@@ -2,10 +2,11 @@
 
 * [Raspberry Pi4](./Pi4.md)
 * [PXEboot, NFSroot](./nfsroot)
-* [Raspbian](./raspbian)
+* [Raspbian(旧情報)](./raspbian)
 * [Ubuntu](./ubuntu)
 * [ピンヘッダ](./pinheader)
 * [config.txt](./ConfigTXT.md)
+* [Raspberry Pi OS](./os)
 
 関連情報
 
